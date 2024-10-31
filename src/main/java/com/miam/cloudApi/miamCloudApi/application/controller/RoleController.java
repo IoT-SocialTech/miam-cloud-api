@@ -29,7 +29,7 @@ public class RoleController {
     }
 
     @Operation(summary = "Create role")
-    @GetMapping("/roles")
+    @PostMapping("/roles")
     public ResponseEntity<ApiResponse<RoleResponseDto>> createRole(@RequestBody RoleRequestDto roleRequestDto) {
         var res = roleService.createRole(roleRequestDto);
         return new ResponseEntity<>(res, HttpStatus.OK);

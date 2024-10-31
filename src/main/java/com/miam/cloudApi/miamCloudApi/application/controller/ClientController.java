@@ -4,7 +4,7 @@ import com.miam.cloudApi.miamCloudApi.application.dto.clientsDto.AverageHeartRat
 import com.miam.cloudApi.miamCloudApi.application.dto.clientsDto.AverageTemperatureResponseDto;
 import com.miam.cloudApi.miamCloudApi.application.dto.clientsDto.HeartRateResponseDto;
 import com.miam.cloudApi.miamCloudApi.application.dto.clientsDto.TemperatureResponseDto;
-import com.miam.cloudApi.miamCloudApi.client.MetricsClient;
+import com.miam.cloudApi.miamCloudApi.application.client.MetricsClient;
 import com.miam.cloudApi.shared.model.dto.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

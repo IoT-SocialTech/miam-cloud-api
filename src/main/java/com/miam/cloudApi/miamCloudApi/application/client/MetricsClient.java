@@ -1,4 +1,4 @@
-package com.miam.cloudApi.miamCloudApi.client;
+package com.miam.cloudApi.miamCloudApi.application.client;
 
 import com.miam.cloudApi.miamCloudApi.application.dto.clientsDto.AverageHeartRateResponseDto;
 import com.miam.cloudApi.miamCloudApi.application.dto.clientsDto.AverageTemperatureResponseDto;
