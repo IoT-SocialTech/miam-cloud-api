@@ -14,6 +14,8 @@ import com.miam.cloudApi.shared.model.enums.Estatus;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,6 +50,46 @@ public class PatientCaregiverServiceImpl implements PatientCaregiverService {
             return new ApiResponse<>("PatientCaregiver found successfully", Estatus.SUCCESS, patientCaregiverResponseDto);
         } else {
             return new ApiResponse<>("PatientCaregiver not found", Estatus.ERROR, null);
+        }
+    }
+
+    @Override
+    public ApiResponse<List<PatientCaregiverResponseDto>> getPatientCaregiverByCaregiverId(int id) {
+        List<PatientCaregiver> patientCaregivers = patientCaregiverRepository.getPatientCaregiverByCaregiverId(id);
+        List<PatientCaregiverResponseDto> patientCaregiverResponseDtoList = new ArrayList<>();
+        if (patientCaregivers.isEmpty()) {
+            return new ApiResponse<>("PatientCaregiver not found", Estatus.ERROR, null);
+        } else {
+            for(PatientCaregiver patientCaregiver : patientCaregivers){
+                PatientResponseDto patientResponseDto = modelMapper.map(patientRepository.getPatientsById(patientCaregiver.getPatient().getId()), PatientResponseDto.class);
+                CaregiverResponseDto caregiverResponseDto = modelMapper.map(caregiverRepository.getCaregiverById(patientCaregiver.getCaregiver().getId()), CaregiverResponseDto.class);
+                PatientCaregiverResponseDto patientCaregiverResponseDto = PatientCaregiverResponseDto.builder()
+                        .patient(patientResponseDto)
+                        .caregiver(caregiverResponseDto)
+                        .build();
+                patientCaregiverResponseDtoList.add(patientCaregiverResponseDto);
+            }
+            return new ApiResponse<>("PatientCaregiver found successfully", Estatus.SUCCESS, patientCaregiverResponseDtoList);
+        }
+    }
+
+    @Override
+    public ApiResponse<List<PatientCaregiverResponseDto>> getPatientCaregiverByPatientId(int id) {
+        List<PatientCaregiver> patientCaregivers = patientCaregiverRepository.getPatientCaregiverByPatientId(id);
+        List<PatientCaregiverResponseDto> patientCaregiverResponseDtoList = new ArrayList<>();
+        if (patientCaregivers.isEmpty()) {
+            return new ApiResponse<>("PatientCaregiver not found", Estatus.ERROR, null);
+        } else {
+            for(PatientCaregiver patientCaregiver : patientCaregivers){
+                PatientResponseDto patientResponseDto = modelMapper.map(patientRepository.getPatientsById(patientCaregiver.getPatient().getId()), PatientResponseDto.class);
+                CaregiverResponseDto caregiverResponseDto = modelMapper.map(caregiverRepository.getCaregiverById(patientCaregiver.getCaregiver().getId()), CaregiverResponseDto.class);
+                PatientCaregiverResponseDto patientCaregiverResponseDto = PatientCaregiverResponseDto.builder()
+                        .patient(patientResponseDto)
+                        .caregiver(caregiverResponseDto)
+                        .build();
+                patientCaregiverResponseDtoList.add(patientCaregiverResponseDto);
+            }
+            return new ApiResponse<>("PatientCaregiver found successfully", Estatus.SUCCESS, patientCaregiverResponseDtoList);
         }
     }
 
