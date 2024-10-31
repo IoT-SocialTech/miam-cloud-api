@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PatientCaregiverResponseDto {
 
-    private int patient;
+    private PatientResponseDto patient;
 
-    private int caregiver;
+    private CaregiverResponseDto caregiver;
 
 }

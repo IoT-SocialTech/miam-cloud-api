@@ -8,6 +8,4 @@ public interface PatientCaregiverService {
 
     ApiResponse<PatientCaregiverResponseDto> getPatientCaregiverById(int patientId, int caregiverId);
 
-    ApiResponse<PatientCaregiverResponseDto> createPatientCaregiver(int patientId, int caregiverId);
-
 }
