@@ -23,7 +23,7 @@ public class Relative {
     @Column(name = "name", length = 75, nullable = false)
     private String name;
 
-    @Column(name = "lastName", length = 75, nullable = false)
+    @Column(name = "last_name", length = 75, nullable = false)
     private String lastName;
 
     @Column(name = "relationship", length = 50, nullable = false)

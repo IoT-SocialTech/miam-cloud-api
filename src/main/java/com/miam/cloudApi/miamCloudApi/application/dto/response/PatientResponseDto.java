@@ -1,5 +1,7 @@
 package com.miam.cloudApi.miamCloudApi.application.dto.response;
 
+import java.time.LocalDate;
+
 import com.miam.cloudApi.miamCloudApi.domain.entities.Account;
 import com.miam.cloudApi.miamCloudApi.domain.entities.Relative;
 import lombok.AllArgsConstructor;
@@ -19,7 +21,7 @@ public class PatientResponseDto {
 
     private String lastName;
 
-    private int age;
+    private LocalDate birthDate;
 
     private String address;
 
