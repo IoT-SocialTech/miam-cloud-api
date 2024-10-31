@@ -1,7 +1,6 @@
 package com.miam.cloudApi.miamCloudApi.application.dto.response;
 
 import com.miam.cloudApi.miamCloudApi.domain.entities.Account;
-import com.miam.cloudApi.miamCloudApi.domain.entities.Relative;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PatientResponseDto {
+public class RelativeResponseDto {
 
     private int id;
 
@@ -19,11 +18,7 @@ public class PatientResponseDto {
 
     private String lastName;
 
-    private int age;
-
-    private String address;
-
-    private Relative relative;
+    private String relationship;
 
     private Account account;
 

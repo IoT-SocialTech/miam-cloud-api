@@ -17,6 +17,9 @@ public class CaregiverRequestDto {
     @NotBlank(message = "Name is mandatory")
     private String name;
 
+    @NotBlank(message = "Last name is mandatory")
+    private String lastName;
+
     @NotBlank(message = "Address is mandatory")
     private String address;
 

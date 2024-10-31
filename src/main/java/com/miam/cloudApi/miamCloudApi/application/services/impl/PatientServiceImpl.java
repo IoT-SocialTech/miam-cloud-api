@@ -6,10 +6,7 @@ import com.miam.cloudApi.miamCloudApi.application.services.PatientService;
 import com.miam.cloudApi.miamCloudApi.domain.entities.Caregiver;
 import com.miam.cloudApi.miamCloudApi.domain.entities.Patient;
 import com.miam.cloudApi.miamCloudApi.domain.entities.PatientCaregiver;
-import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.AccountRepository;
-import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.CaregiverRepository;
-import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.PatientCaregiverRepository;
-import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.PatientRepository;
+import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.*;
 import com.miam.cloudApi.shared.exception.ResourceNotFoundException;
 import com.miam.cloudApi.shared.model.dto.response.ApiResponse;
 import com.miam.cloudApi.shared.model.enums.Estatus;
@@ -25,16 +22,18 @@ public class PatientServiceImpl implements PatientService {
     private final AccountRepository accountRepository;
     private final CaregiverRepository caregiverRepository;
     private final PatientCaregiverRepository patientCaregiverRepository;
+    private final RelativeRepository relativeRepository;
     private final ModelMapper modelMapper;
 
     public PatientServiceImpl(PatientRepository patientRepository, AccountRepository accountRepository,
                               CaregiverRepository caregiverRepository, PatientCaregiverRepository patientCaregiverRepository,
-                              ModelMapper modelMapper) {
+                              ModelMapper modelMapper, RelativeRepository relativeRepository) {
         this.patientRepository = patientRepository;
         this.accountRepository = accountRepository;
         this.caregiverRepository = caregiverRepository;
         this.patientCaregiverRepository = patientCaregiverRepository;
         this.modelMapper = modelMapper;
+        this.relativeRepository = relativeRepository;
     }
 
     @Override
@@ -55,6 +54,7 @@ public class PatientServiceImpl implements PatientService {
 
         var patient = modelMapper.map(patientRequestDto, Patient.class);
         patient.setAccount(accountRepository.getAccountById(patientRequestDto.getAccount()));
+        patient.setRelative(relativeRepository.getRelativesById(patientRequestDto.getRelative()));
         patient = patientRepository.save(patient);
 
         // Crear relaciones en PatientCaregiver si hay IDs de cuidadores
@@ -89,6 +89,7 @@ public class PatientServiceImpl implements PatientService {
             Patient patient = optionalPatient.get();
             modelMapper.map(patientRequestDto, patient);
             patient.setAccount(accountRepository.getAccountById(patientRequestDto.getAccount()));
+            patient.setRelative(relativeRepository.getRelativesById(patientRequestDto.getRelative()));
             patient = patientRepository.save(patient);
 
             // Actualizar relaciones con los cuidadores

@@ -6,13 +6,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PatientRequestDto {
+public class RelativeRequestDto {
 
     @NotBlank(message = "Name is mandatory")
     private String name;
@@ -20,18 +18,10 @@ public class PatientRequestDto {
     @NotBlank(message = "Last name is mandatory")
     private String lastName;
 
-    @NotBlank(message = "Age is mandatory")
-    private int age;
-
-    @NotBlank(message = "Address is mandatory")
-    private String address;
+    @NotBlank(message = "Relationship is mandatory")
+    private String relationship;
 
     @NotBlank(message = "Account is mandatory")
     private int account;
-
-    @NotBlank(message = "Relative is mandatory")
-    private int relative;
-
-    private List<Integer> caregiverIds;
 
 }
