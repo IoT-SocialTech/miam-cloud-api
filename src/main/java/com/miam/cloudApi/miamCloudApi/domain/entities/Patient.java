@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Data
@@ -24,11 +25,11 @@ public class Patient {
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
-    @Column(name = "lastName", length = 100, nullable = false)
+    @Column(name = "last_name", length = 100, nullable = false)
     private String lastName;
 
-    @Column(name = "age", nullable = false)
-    private int age;
+    @Column (name = "birth_date", nullable = false)
+    private LocalDate birthDate;
 
     @Column(name = "address", length = 200, nullable = false)
     private String address;

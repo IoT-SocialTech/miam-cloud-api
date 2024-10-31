@@ -23,7 +23,7 @@ public class Caregiver {
     @Column(name = "name", length = 150, nullable = false)
     private String name;
 
-    @Column(name = "lastName", length = 150, nullable = false)
+    @Column(name = "last_name", length = 150, nullable = false)
     private String lastName;
 
     @Column(name = "address", length = 150, nullable = false)
