@@ -6,6 +6,7 @@ import com.miam.cloudApi.miamCloudApi.application.services.AccountService;
 import com.miam.cloudApi.miamCloudApi.domain.entities.Account;
 import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.AccountRepository;
 import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.RoleRepository;
+import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.SubscriptionRepository;
 import com.miam.cloudApi.shared.model.dto.response.ApiResponse;
 import com.miam.cloudApi.shared.model.enums.Estatus;
 import org.modelmapper.ModelMapper;
@@ -18,13 +19,15 @@ import java.util.Optional;
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
+    private final SubscriptionRepository subscriptionRepository;
     private final RoleRepository roleRepository;
     private final ModelMapper modelMapper;
 
-    public AccountServiceImpl(AccountRepository accountRepository, ModelMapper modelMapper, RoleRepository roleRepository) {
+    public AccountServiceImpl(AccountRepository accountRepository, ModelMapper modelMapper, RoleRepository roleRepository, SubscriptionRepository subscriptionRepository) {
         this.accountRepository = accountRepository;
         this.modelMapper = modelMapper;
         this.roleRepository = roleRepository;
+        this.subscriptionRepository = subscriptionRepository;
     }
 
     @Override
@@ -45,6 +48,7 @@ public class AccountServiceImpl implements AccountService {
 
         var account = modelMapper.map(accountRequestDTO, Account.class);
         account.setRole(roleRepository.getRoleById(accountRequestDTO.getRole()));
+        account.setSubscription(subscriptionRepository.getSubscriptionById(accountRequestDTO.getSubscription()));
         account.setCreatedAt(LocalDateTime.now());
         accountRepository.save(account);
 
@@ -64,6 +68,7 @@ public class AccountServiceImpl implements AccountService {
             Account account = accountOptional.get();
             modelMapper.map(accountRequestDTO, account);
             account.setRole(roleRepository.getRoleById(accountRequestDTO.getRole()));
+            account.setSubscription(subscriptionRepository.getSubscriptionById(accountRequestDTO.getSubscription()));
             accountRepository.save(account);
             AccountResponseDto response = modelMapper.map(account, AccountResponseDto.class);
             return new ApiResponse<>("Account updated successfully", Estatus.SUCCESS, response);
