@@ -8,7 +8,7 @@ import com.miam.cloudApi.shared.model.dto.response.ApiResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@FeignClient(name = "mian-edge-api", url = "http://localhost:8081/api/v1/miam-edge-api")
+@FeignClient(name = "mian-edge-api", url = "https://miam-edge-api.onrender.com/api/v1/miam-edge-api")
 public interface MetricsClient {
 
     @GetMapping("/metrics/averageHeartRate")
