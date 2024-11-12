@@ -24,10 +24,6 @@ public class SubscriptionResponseDto {
 
     private String type;
 
-    private Account account;
-
-    private Subscription subscription;
-
     private Plan plan;
 
 }

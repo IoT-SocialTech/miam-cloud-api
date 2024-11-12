@@ -27,7 +27,7 @@ public class Subscription {
     LocalDateTime endDate;
 
     @Column(name = "is_active")
-    boolean isActive;
+    private Boolean isActive;
 
     @Column(name = "type", length = 100)
     private String type;

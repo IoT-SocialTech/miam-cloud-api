@@ -19,13 +19,11 @@ import java.util.Optional;
 public class SubscriptionServiceImpl implements SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
-    private final AccountRepository accountRepository;
     private final PlanRepository planRepository;
     private final ModelMapper modelMapper;
 
-    public SubscriptionServiceImpl(SubscriptionRepository subscriptionRepository, AccountRepository accountRepository, PlanRepository planRepository, ModelMapper modelMapper) {
+    public SubscriptionServiceImpl(SubscriptionRepository subscriptionRepository, PlanRepository planRepository, ModelMapper modelMapper) {
         this.subscriptionRepository = subscriptionRepository;
-        this.accountRepository = accountRepository;
         this.planRepository = planRepository;
         this.modelMapper = modelMapper;
     }
@@ -52,7 +50,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         subscription.setType(subscriptionRequestDto.getType());
         subscription.setStartDate(LocalDateTime.now());
         subscription.setEndDate(LocalDateTime.now().plusMonths(1));
-        subscription.setActive(subscription.isActive());
+        subscription.setIsActive(subscriptionRequestDto.getIsActive());
 
         subscriptionRepository.save(subscription);
 

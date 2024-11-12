@@ -6,6 +6,7 @@ import com.miam.cloudApi.miamCloudApi.application.services.PlanService;
 import com.miam.cloudApi.miamCloudApi.domain.entities.Plan;
 import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.PlanRepository;
 import com.miam.cloudApi.shared.model.dto.response.ApiResponse;
+import com.miam.cloudApi.shared.model.enums.Estatus;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +29,11 @@ public class PlanServiceImpl implements PlanService {
         Optional<Plan> optionalPlan = planRepository.findById(id);
 
         if (optionalPlan.isEmpty()){
-            return new ApiResponse<>("Plan not found", null, null);
+            return new ApiResponse<>("Plan not found", Estatus.ERROR, null);
         } else {
             Plan plan = optionalPlan.get();
             PlanResponseDto response = modelMapper.map(plan, PlanResponseDto.class);
-            return new ApiResponse<>("Plan found successfully", null, response);
+            return new ApiResponse<>("Plan found successfully", Estatus.SUCCESS, response);
         }
 
     }
@@ -45,7 +46,7 @@ public class PlanServiceImpl implements PlanService {
                 .map(plan -> modelMapper.map(plan, PlanResponseDto.class))
                 .toList();
 
-        return new ApiResponse<>("Plans found successfully", null, plansResponseDto);
+        return new ApiResponse<>("Plans found successfully", Estatus.SUCCESS, plansResponseDto);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class PlanServiceImpl implements PlanService {
         var plan = modelMapper.map(planRequestDto, Plan.class);
         planRepository.save(plan);
 
-        return new ApiResponse<>("Plan created successfully", null, modelMapper.map(plan, PlanResponseDto.class));
+        return new ApiResponse<>("Plan created successfully", Estatus.SUCCESS, modelMapper.map(plan, PlanResponseDto.class));
     }
 
     @Override
@@ -61,14 +62,14 @@ public class PlanServiceImpl implements PlanService {
         Optional<Plan> optionalPlan = planRepository.findById(id);
 
         if (optionalPlan.isEmpty()){
-            return new ApiResponse<>("Plan not found", null, null);
+            return new ApiResponse<>("Plan not found", Estatus.ERROR, null);
         } else {
             Plan plan = optionalPlan.get();
             modelMapper.map(planRequestDto, plan);
             planRepository.save(plan);
 
             PlanResponseDto planResponseDto = modelMapper.map(plan, PlanResponseDto.class);
-            return new ApiResponse<>("Plan updated successfully", null, modelMapper.map(plan, PlanResponseDto.class));
+            return new ApiResponse<>("Plan updated successfully", Estatus.SUCCESS, modelMapper.map(plan, PlanResponseDto.class));
         }
     }
 
@@ -77,12 +78,12 @@ public class PlanServiceImpl implements PlanService {
         Optional<Plan> optionalPlan = planRepository.findById(id);
 
         if (optionalPlan.isEmpty()){
-            return new ApiResponse<>("Plan not found", null, null);
+            return new ApiResponse<>("Plan not found", Estatus.ERROR, null);
         } else {
             Plan plan = optionalPlan.get();
             planRepository.delete(plan);
 
-            return new ApiResponse<>("Plan deleted successfully", null, modelMapper.map(plan, PlanResponseDto.class));
+            return new ApiResponse<>("Plan deleted successfully", Estatus.SUCCESS, modelMapper.map(plan, PlanResponseDto.class));
         }
     }
 

@@ -21,6 +21,6 @@ public class SubscriptionRequestDto {
     private int planId;
 
     @NotBlank(message = "Is active is mandatory")
-    private boolean isActive;
+    private Boolean isActive;
 
 }
