@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -25,6 +26,9 @@ public class PatientRequestDto {
 
     @NotBlank(message = "Address is mandatory")
     private String address;
+
+    @NotBlank(message = "Birthdate is mandatory")
+    private LocalDate birthdate;
 
     @NotBlank(message = "Account is mandatory")
     private int account;

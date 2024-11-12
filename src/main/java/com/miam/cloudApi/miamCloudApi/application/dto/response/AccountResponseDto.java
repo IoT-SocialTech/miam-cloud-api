@@ -1,6 +1,7 @@
 package com.miam.cloudApi.miamCloudApi.application.dto.response;
 
 import com.miam.cloudApi.miamCloudApi.domain.entities.Role;
+import com.miam.cloudApi.miamCloudApi.domain.entities.Subscription;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,8 @@ public class AccountResponseDto {
     private boolean isActive;
 
     private LocalDateTime createdAt;
+
+    private Subscription subscription;
 
     private Role role;
 }

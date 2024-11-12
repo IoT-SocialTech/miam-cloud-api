@@ -24,6 +24,9 @@ public class AccountRequestDto {
     @NotBlank(message = "isActive is mandatory")
     private boolean isActive;
 
+    @NotBlank(message = "Subscription is mandatory")
+    private int subscription;
+
     @NotBlank(message = "role is mandatory")
     private int role;
 }
