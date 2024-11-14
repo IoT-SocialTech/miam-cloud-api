@@ -12,22 +12,20 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CaregiverRequestDto {
+public class NursingHomeRequestDto {
 
     @NotBlank(message = "Name is mandatory")
     private String name;
 
-    @NotBlank(message = "Last name is mandatory")
-    private String lastName;
+    @NotBlank(message = "Ubicacion is mandatory")
+    private String location;
 
-    @NotBlank(message = "Address is mandatory")
-    private String address;
+    @NotBlank(message = "Ruc is mandatory")
+    private Long ruc;
 
     @NotBlank(message = "Account is mandatory")
     private int account;
 
-    private List<Integer> patientIds;
-
-    private List<Integer> nursingHomeIds;
+    List<Integer> caregiverIds;
 
 }
