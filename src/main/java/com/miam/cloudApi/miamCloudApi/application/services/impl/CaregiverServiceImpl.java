@@ -3,13 +3,8 @@ package com.miam.cloudApi.miamCloudApi.application.services.impl;
 import com.miam.cloudApi.miamCloudApi.application.dto.request.CaregiverRequestDto;
 import com.miam.cloudApi.miamCloudApi.application.dto.response.CaregiverResponseDto;
 import com.miam.cloudApi.miamCloudApi.application.services.CaregiverService;
-import com.miam.cloudApi.miamCloudApi.domain.entities.Caregiver;
-import com.miam.cloudApi.miamCloudApi.domain.entities.Patient;
-import com.miam.cloudApi.miamCloudApi.domain.entities.PatientCaregiver;
-import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.AccountRepository;
-import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.CaregiverRepository;
-import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.PatientCaregiverRepository;
-import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.PatientRepository;
+import com.miam.cloudApi.miamCloudApi.domain.entities.*;
+import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.*;
 import com.miam.cloudApi.shared.exception.ResourceNotFoundException;
 import com.miam.cloudApi.shared.model.dto.response.ApiResponse;
 import com.miam.cloudApi.shared.model.enums.Estatus;
@@ -25,16 +20,20 @@ public class CaregiverServiceImpl implements CaregiverService {
     private final AccountRepository accountRepository;
     private final PatientRepository patientRepository;
     private final PatientCaregiverRepository patientCaregiverRepository;
+    private final NursingHomeRepository nursingHomeRepository;
+    private final CaregiversNursingHomesRepository caregiversNursingHomesRepository;
     private final ModelMapper modelMapper;
 
     public CaregiverServiceImpl(CaregiverRepository caregiverRepository, AccountRepository accountRepository,
                                 PatientRepository patientRepository, PatientCaregiverRepository patientCaregiverRepository,
-                                ModelMapper modelMapper) {
+                                ModelMapper modelMapper, NursingHomeRepository nursingHomeRepository, CaregiversNursingHomesRepository caregiversNursingHomesRepository) {
         this.caregiverRepository = caregiverRepository;
         this.accountRepository = accountRepository;
         this.patientRepository = patientRepository;
         this.patientCaregiverRepository = patientCaregiverRepository;
         this.modelMapper = modelMapper;
+        this.nursingHomeRepository = nursingHomeRepository;
+        this.caregiversNursingHomesRepository = caregiversNursingHomesRepository;
     }
 
     @Override
@@ -74,6 +73,22 @@ public class CaregiverServiceImpl implements CaregiverService {
             }
         }
 
+        if (caregiverRequestDto.getNursingHomeIds() != null){
+            for (Integer nursingHomeId : caregiverRequestDto.getNursingHomeIds()) {
+                NursingHome nursingHome = nursingHomeRepository.findById(nursingHomeId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Nursing home not found"));
+
+                // Verificar si la relación ya existe
+                if (!caregiversNursingHomesRepository.findByCaregiverIdAndNursingHomeId(caregiver.getId(), nursingHome.getId()).isPresent()) {
+                    CaregiversNursingHomes caregiversNursingHomes = CaregiversNursingHomes.builder()
+                            .caregiver(caregiver)
+                            .nursingHome(nursingHome)
+                            .build();
+                    caregiversNursingHomesRepository.save(caregiversNursingHomes);
+                }
+            }
+        }
+
         var response = modelMapper.map(caregiver, CaregiverResponseDto.class);
         return new ApiResponse<>("Caregiver created successfully", Estatus.SUCCESS, response);
     }
@@ -104,6 +119,22 @@ public class CaregiverServiceImpl implements CaregiverService {
                                 .caregiver(caregiver)
                                 .build();
                         patientCaregiverRepository.save(patientCaregiver);
+                    }
+                }
+            }
+
+            if (caregiverRequestDto.getNursingHomeIds() != null){
+                for (Integer nursingHomeId : caregiverRequestDto.getNursingHomeIds()) {
+                    NursingHome nursingHome = nursingHomeRepository.findById(nursingHomeId)
+                            .orElseThrow(() -> new ResourceNotFoundException("Nursing home not found"));
+
+                    // Verificar si la relación ya existe
+                    if (!caregiversNursingHomesRepository.findByCaregiverIdAndNursingHomeId(caregiver.getId(), nursingHome.getId()).isPresent()) {
+                        CaregiversNursingHomes caregiversNursingHomes = CaregiversNursingHomes.builder()
+                                .caregiver(caregiver)
+                                .nursingHome(nursingHome)
+                                .build();
+                        caregiversNursingHomesRepository.save(caregiversNursingHomes);
                     }
                 }
             }

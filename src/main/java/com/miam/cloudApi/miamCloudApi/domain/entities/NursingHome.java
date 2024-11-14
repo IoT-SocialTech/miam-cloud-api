@@ -1,7 +1,6 @@
 package com.miam.cloudApi.miamCloudApi.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +14,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "caregivers")
-public class Caregiver {
+@Table(name = "nursing_home")
+public class NursingHome {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,22 +24,18 @@ public class Caregiver {
     @Column(name = "name", length = 150, nullable = false)
     private String name;
 
-    @Column(name = "last_name", length = 150, nullable = false)
-    private String lastName;
+    @Column(name = "ubicacion", length = 150, nullable = false)
+    private String location;
 
-    @Column(name = "address", length = 150, nullable = false)
-    private String address;
+    @Column(name = "ruc", nullable = false)
+    private Long ruc;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
-    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "nursingHome", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<PatientCaregiver> patients;
-
-    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<CaregiversNursingHomes> nursingHomes;
+    private Set<CaregiversNursingHomes> caregivers;
 
 }
