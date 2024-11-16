@@ -50,6 +50,18 @@ public class NursingHomeServiceImpl implements NursingHomeService {
     }
 
     @Override
+    public ApiResponse<NursingHomeResponseDto> getNursingHomeByAccountId(int id) {
+        NursingHome nursingHome = nursingHomeRepository.getNursingHomeByAccountId(id);
+
+        if (nursingHome == null){
+            return new ApiResponse<>("Nursing Home not found", Estatus.ERROR, null);
+        } else {
+            NursingHomeResponseDto response = modelMapper.map(nursingHome, NursingHomeResponseDto.class);
+            return new ApiResponse<>("Nursing Home found successfully", Estatus.SUCCESS, response);
+        }
+    }
+
+    @Override
     public ApiResponse<NursingHomeResponseDto> createNursingHome(NursingHomeRequestDto nursingHomeRequestDto) {
         var nursingHome = modelMapper.map(nursingHomeRequestDto, NursingHome.class);
         nursingHome.setAccount(accountRepository.getAccountById(nursingHomeRequestDto.getAccount()));

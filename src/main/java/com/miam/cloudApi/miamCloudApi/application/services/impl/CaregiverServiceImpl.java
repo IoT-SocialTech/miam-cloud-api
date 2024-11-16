@@ -50,6 +50,18 @@ public class CaregiverServiceImpl implements CaregiverService {
     }
 
     @Override
+    public ApiResponse<CaregiverResponseDto> getCaregiverByAccountId(int id) {
+        Caregiver caregiver = caregiverRepository.getCaregiverByAccountId(id);
+
+        if (caregiver == null) {
+            return new ApiResponse<>("Caregiver not found", Estatus.ERROR, null);
+        } else {
+            CaregiverResponseDto response = modelMapper.map(caregiver, CaregiverResponseDto.class);
+            return new ApiResponse<>("Caregiver found successfully", Estatus.SUCCESS, response);
+        }
+    }
+
+    @Override
     public ApiResponse<CaregiverResponseDto> createCaregiver(CaregiverRequestDto caregiverRequestDto) {
 
         var caregiver = modelMapper.map(caregiverRequestDto, Caregiver.class);

@@ -28,6 +28,13 @@ public class RelativeController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @Operation(summary = "Get relative by account id")
+    @GetMapping("/relatives/account/{id}")
+    public ResponseEntity<ApiResponse<RelativeResponseDto>> getRelativeByAccountId(@PathVariable int id) {
+        var res = relativeService.getRelativeByAccountId(id);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
     @Operation(summary = "Create relative")
     @PostMapping("/relatives")
     public ResponseEntity<ApiResponse<RelativeResponseDto>> createRelative(@RequestBody RelativeRequestDto relativeRequestDto) {

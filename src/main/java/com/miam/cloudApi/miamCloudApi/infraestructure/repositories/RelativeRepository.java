@@ -7,4 +7,6 @@ public interface RelativeRepository extends CrudRepository<Relative, Integer> {
 
     Relative getRelativesById(int id);
 
+    Relative getRelativeByAccountId(int id);
+
 }

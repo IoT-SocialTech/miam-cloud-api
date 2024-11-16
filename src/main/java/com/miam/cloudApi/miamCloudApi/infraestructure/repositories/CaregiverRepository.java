@@ -7,4 +7,6 @@ public interface CaregiverRepository extends CrudRepository<Caregiver, Integer> 
 
     Caregiver getCaregiverById(int id);
 
+    Caregiver getCaregiverByAccountId(int id);
+
 }
