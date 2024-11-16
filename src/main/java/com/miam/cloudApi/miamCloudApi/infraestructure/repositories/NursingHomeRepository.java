@@ -7,4 +7,6 @@ public interface NursingHomeRepository extends CrudRepository<NursingHome, Integ
 
     NursingHome getNursingHomeById(int id);
 
+    NursingHome getNursingHomeByAccountId(int id);
+
 }

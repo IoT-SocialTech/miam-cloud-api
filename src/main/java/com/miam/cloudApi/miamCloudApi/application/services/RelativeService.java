@@ -8,6 +8,8 @@ public interface RelativeService {
 
     ApiResponse<RelativeResponseDto> getRelativeById(int id);
 
+    ApiResponse<RelativeResponseDto> getRelativeByAccountId(int id);
+
     ApiResponse<RelativeResponseDto> createRelative(RelativeRequestDto relativeRequestDto);
 
     ApiResponse<RelativeResponseDto> updateRelative(int id, RelativeRequestDto relativeRequestDto);

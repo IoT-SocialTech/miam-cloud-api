@@ -8,6 +8,8 @@ public interface CaregiverService {
 
     ApiResponse<CaregiverResponseDto> getCaregiverById(int id);
 
+    ApiResponse<CaregiverResponseDto> getCaregiverByAccountId(int id);
+
     ApiResponse<CaregiverResponseDto> createCaregiver(CaregiverRequestDto caregiverRequestDto);
 
     ApiResponse<CaregiverResponseDto> updateCaregiver(int id, CaregiverRequestDto caregiverRequestDto);

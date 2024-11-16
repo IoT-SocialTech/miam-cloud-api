@@ -28,6 +28,13 @@ public class CaregiverController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @Operation(summary = "get a caregiver by account id")
+    @GetMapping("/caregivers/account/{id}")
+    public ResponseEntity<ApiResponse<CaregiverResponseDto>> getCaregiverByAccountId(@PathVariable int id) {
+        var res = caregiverService.getCaregiverByAccountId(id);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
     @Operation(summary = "create a new caregiver")
     @PostMapping("/caregivers")
     public ResponseEntity<ApiResponse<CaregiverResponseDto>> createCaregiver(@RequestBody CaregiverRequestDto caregiverRequestDto) {

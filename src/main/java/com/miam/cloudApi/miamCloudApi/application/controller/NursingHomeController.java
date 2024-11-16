@@ -28,6 +28,13 @@ public class NursingHomeController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @Operation(summary = "get a nursing home by account id")
+    @GetMapping("/nursingHomes/account/{id}")
+    public ResponseEntity<ApiResponse<NursingHomeResponseDto>> getNursingHomeByAccountId(@PathVariable int id) {
+        var res = nursingHomeService.getNursingHomeByAccountId(id);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
     @Operation(summary = "create a nursing home")
     @PostMapping("/nursingHomes")
     public ResponseEntity<ApiResponse<NursingHomeResponseDto>> createNursingHome(@RequestBody NursingHomeRequestDto nursingHomeRequestDto) {

@@ -40,6 +40,18 @@ public class RelativeServiceImpl implements RelativeService {
     }
 
     @Override
+    public ApiResponse<RelativeResponseDto> getRelativeByAccountId(int id) {
+        Relative relative = relativeRepository.getRelativeByAccountId(id);
+
+        if (relative == null) {
+            return new ApiResponse<>("Relative not found", Estatus.ERROR, null);
+        } else {
+            RelativeResponseDto response = modelMapper.map(relative, RelativeResponseDto.class);
+            return new ApiResponse<>("Relative found successfully", Estatus.SUCCESS, response);
+        }
+    }
+
+    @Override
     public ApiResponse<RelativeResponseDto> createRelative(RelativeRequestDto relativeRequestDto) {
         var relative = modelMapper.map(relativeRequestDto, Relative.class);
         relative.setAccount(accountRepository.getAccountById(relativeRequestDto.getAccount()));

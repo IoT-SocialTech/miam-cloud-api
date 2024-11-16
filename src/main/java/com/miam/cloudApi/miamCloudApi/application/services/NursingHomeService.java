@@ -8,6 +8,8 @@ public interface NursingHomeService {
 
     ApiResponse<NursingHomeResponseDto> getNursingHomeById(int id);
 
+    ApiResponse<NursingHomeResponseDto> getNursingHomeByAccountId(int id);
+
     ApiResponse<NursingHomeResponseDto> createNursingHome(NursingHomeRequestDto nursingHomeRequestDto);
 
     ApiResponse<NursingHomeResponseDto> updateNursingHome(int id, NursingHomeRequestDto nursingHomeRequestDto);
