@@ -19,4 +19,6 @@ public interface MedicationScheduleService {
 
     ApiResponse<Void> deleteMedicationSchedule(int id);
 
+    ApiResponse<List<MedicationScheduleResponse>> getMedicationScheduleByCaregiverId(int caregiverId);
+
 }

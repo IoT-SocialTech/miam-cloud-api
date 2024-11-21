@@ -79,6 +79,31 @@ public class MedicationScheduleServiceImpl implements MedicationScheduleService 
     }
 
     @Override
+    public ApiResponse<List<MedicationScheduleResponse>> getMedicationScheduleByCaregiverId(int caregiverId) {
+
+        List<MedicationSchedule> medicationScheduleList = medicationScheduleRepository.getMedicationScheduleByCaregiverId(caregiverId);
+
+        if (medicationScheduleList.isEmpty()) {
+            return new ApiResponse<>("No medication schedule found for this patient", Estatus.ERROR, null);
+        } else {
+            List<MedicationScheduleResponse> medicationScheduleResponseList = medicationScheduleList.stream()
+                    .map(medicationSchedule -> MedicationScheduleResponse.builder()
+                            .id(medicationSchedule.getId())
+                            .patientId(medicationSchedule.getPatient().getId())
+                            .caregiverId(medicationSchedule.getCaregiver().getId())
+                            .medicationName(medicationSchedule.getMedicationName())
+                            .dose(medicationSchedule.getDose())
+                            .hour(medicationSchedule.getHour())
+                            .taken(medicationSchedule.getTaken())
+                            .build())
+                    .toList();
+            return new ApiResponse<>("Medication schedule found successfully", Estatus.SUCCESS, medicationScheduleResponseList);
+        }
+
+    }
+
+
+    @Override
     public ApiResponse<MedicationScheduleResponse> createMedicationSchedule(MedicationScheduleRequest medicationScheduleRequest) {
 
         MedicationSchedule medicationSchedule = new MedicationSchedule();
@@ -143,6 +168,5 @@ public class MedicationScheduleServiceImpl implements MedicationScheduleService 
         }
 
     }
-
 
 }

@@ -59,4 +59,11 @@ public class MedicationScheduleController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @Operation(summary = "get a medication schedule by caregiver id")
+    @GetMapping("/medicationSchedules/caregiver/{caregiverId}")
+    public ResponseEntity<ApiResponse<List<MedicationScheduleResponse>>> getMedicationScheduleByCaregiverId(@PathVariable int caregiverId) {
+        var res = medicationScheduleService.getMedicationScheduleByCaregiverId(caregiverId);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
 }

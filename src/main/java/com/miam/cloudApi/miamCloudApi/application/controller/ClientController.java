@@ -55,4 +55,11 @@ public class ClientController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @Operation(summary = "Get device by id")
+    @GetMapping("/device/{id}")
+    ResponseEntity<ApiResponse<DeviceResponseDto>> getDeviceById(@PathVariable String id) {
+        var res = metricsClient.getDeviceById(id);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
 }

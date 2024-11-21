@@ -27,8 +27,17 @@ public class ReportHistory {
     @Column(name = "generated_date", nullable = false)
     private LocalDateTime generatedDate;
 
-    @Column(name = "status", length = 50, nullable = false)
-    private String status;
+    @Column(name = "attending_date")
+    private LocalDateTime attendingDate;
+
+    @Column(name = "description", length = 255)
+    private String description;
+
+    @Column(name = "caregiver_notes", length = 255)
+    private String caregiverNotes;
+
+    @Column(name = "actions", length = 255)
+    private String actions;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id", nullable = false)

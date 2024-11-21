@@ -25,4 +25,8 @@ public interface MetricsClient {
 
     @PostMapping("/device/{id}")
     ApiResponse<DeviceResponseDto> updateDevice(@PathVariable String id, @RequestBody UpdateLimitValues updateLimitValues);
+
+    @GetMapping("/device/{id}")
+    ApiResponse<DeviceResponseDto> getDeviceById(@PathVariable String id);
+
 }
