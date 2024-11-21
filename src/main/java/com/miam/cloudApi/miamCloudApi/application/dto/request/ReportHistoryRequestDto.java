@@ -13,16 +13,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ReportHistoryRequestDto {
 
-    @NotBlank(message = "Report type is mandatory")
-    private ReportType reportType;
-
-    @NotBlank(message = "Status is mandatory")
-    private String status;
-
     @NotBlank(message = "Patient id is mandatory")
     private int patientId;
 
     @NotBlank(message = "Caregiver id is mandatory")
     private int caregiverId;
+
+    private Double temperature;
+
+    private int heartRate;
 
 }

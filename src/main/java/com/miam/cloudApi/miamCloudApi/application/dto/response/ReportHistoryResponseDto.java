@@ -20,7 +20,13 @@ public class ReportHistoryResponseDto {
 
     private LocalDateTime generatedDate;
 
-    private String status;
+    private LocalDateTime attendingDate;
+
+    private String description;
+
+    private String caregiverNotes;
+
+    private String actions;
 
     private int patientId;
 

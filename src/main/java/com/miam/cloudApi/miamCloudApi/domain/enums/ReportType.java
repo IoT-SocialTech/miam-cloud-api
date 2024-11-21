@@ -1,9 +1,11 @@
 package com.miam.cloudApi.miamCloudApi.domain.enums;
 
 public enum ReportType {
-    HEART_RATE("Heart Rate"),
-    TEMPERATURE("Temperature"),
-    ALERTS_GENERATED("Alerts Generated");
+    HIGH_HEART_RATE("High Heart Rate"),
+    LOW_HEART_RATE("Low Heart Rate"),
+    HIGH_TEMPERATURE("High Temperature"),
+    LOW_TEMPERATURE("Low Temperature"),
+    NORMAL_METRICS("Normal Metrics");
 
     private String type;
 

@@ -10,10 +10,18 @@ import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.CaregiverRepo
 import com.miam.cloudApi.miamCloudApi.infraestructure.repositories.NotificationRepository;
 import com.miam.cloudApi.shared.model.dto.response.ApiResponse;
 import com.miam.cloudApi.shared.model.enums.Estatus;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.io.entity.StringEntity;
+import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +29,15 @@ import java.util.Optional;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
+
+    @Value("${app.onesignal-app-id}")
+    private String onesignalAppId;
+
+    @Value("${app.onesignal-api-key}")
+    private String onesignalApiKey;
+
+    @Value("${app.onesignal-api-url}")
+    private String onesignalApiUrl;
 
     NotificationRepository notificationRepository;
     CaregiverRepository caregiverRepository;
@@ -89,6 +106,30 @@ public class NotificationServiceImpl implements NotificationService {
                 .status(notification.getStatus())
                 .message(notification.getMessage())
                 .build();
+
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpPost httpPost = new HttpPost(onesignalApiUrl);
+
+            httpPost.setHeader("Content-Type", "application/json; charset=UTF-8");
+            httpPost.setHeader("Authorization", "Basic " + onesignalApiKey);
+
+            JSONObject body = new JSONObject();
+
+            body.put("app_id", onesignalAppId);
+            body.put("included_segments", new String[]{"All"});
+            body.put("headings", new JSONObject().put("en", notificationResponseDto.getTitle()));
+            body.put("contents", new JSONObject().put("en", notificationResponseDto.getMessage())); // Mensaje de la notificación
+
+            StringEntity entity = new StringEntity(body.toString(), ContentType.parse("UTF-8"));
+            httpPost.setEntity(entity);
+
+            try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+                System.out.println("Response Code: " + response.getCode());
+                System.out.println("Response: " + EntityUtils.toString(response.getEntity()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return new ApiResponse<>("Notification created successfully", Estatus.SUCCESS, notificationResponseDto);
     }

@@ -9,4 +9,6 @@ public interface MedicationScheduleRepository extends CrudRepository<MedicationS
 
     List<MedicationSchedule> getMedicationScheduleByPatientId(int patientId);
 
+    List<MedicationSchedule> getMedicationScheduleByCaregiverId(int caregiverId);
+
 }

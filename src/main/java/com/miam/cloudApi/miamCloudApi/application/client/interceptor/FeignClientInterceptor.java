@@ -26,5 +26,7 @@ public class FeignClientInterceptor implements RequestInterceptor {
         if (token != null && !token.isEmpty()) {
             requestTemplate.header("Authorization", "Bearer " + token);
         }
+
+        System.out.println("Authorization Header: Bearer " + token);
     }
 }

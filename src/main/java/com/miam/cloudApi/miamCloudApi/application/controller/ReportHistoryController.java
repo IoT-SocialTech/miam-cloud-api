@@ -1,6 +1,7 @@
 package com.miam.cloudApi.miamCloudApi.application.controller;
 
 import com.miam.cloudApi.miamCloudApi.application.dto.request.ReportHistoryRequestDto;
+import com.miam.cloudApi.miamCloudApi.application.dto.request.UpdateHistoryRequestDto;
 import com.miam.cloudApi.miamCloudApi.application.dto.request.UpdateReportHistoryStatus;
 import com.miam.cloudApi.miamCloudApi.application.dto.response.ReportHistoryResponseDto;
 import com.miam.cloudApi.miamCloudApi.application.services.ReportHistoryService;
@@ -54,8 +55,8 @@ public class ReportHistoryController {
 
     @Operation(summary = "update an existing report history")
     @PutMapping("/reportHistories/{id}")
-    public ResponseEntity<ApiResponse<ReportHistoryResponseDto>> updateReportHistory(@PathVariable int id, @RequestBody UpdateReportHistoryStatus updateReportHistoryStatus) {
-        var res = reportHistoryService.updateReportHistory(id, updateReportHistoryStatus);
+    public ResponseEntity<ApiResponse<ReportHistoryResponseDto>> updateReportHistory(@PathVariable int id, @RequestBody UpdateHistoryRequestDto updateHistoryRequestDto) {
+        var res = reportHistoryService.updateReportHistory(id, updateHistoryRequestDto);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
